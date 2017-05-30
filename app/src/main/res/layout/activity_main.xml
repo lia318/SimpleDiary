@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        android:calendarTextColor="#00E1FF"/>
+        android:datePickerMode="spinner" />
 
     <EditText
         android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="10" />
+        android:lines="10"
+        android:TextColor="#00E1FF"/>
 
     <Button
         android:id="@+id/but"
