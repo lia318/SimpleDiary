@@ -6,6 +6,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 fileName = year + "_" +(month+1)+ "_" +day+ ".txt";
                 String readDate = readDiary(fileName);
-                edit.setText(readDate);
+                edit.setText(readDate); // fileInput
                 but.setEnabled(true); // 새로 작성이나 수정이 되도록 활성화
 
             }
@@ -40,9 +43,26 @@ public class MainActivity extends AppCompatActivity {
     } // end of onCreate
 
     public String readDiary(String fileName){
-        return null;
-    }
+        String diaryStr = null;
+        FileInputStream fIn = null;
 
+        // 예외처리
+        try{
+            fIn = openFileInput(fileName);
+            byte[] buf = new byte[500];
+            fIn.read(buf);
+            diaryStr = new String(buf).trim(); // byte => String으로 바꾸는 방법 // trim() : 앞, 뒤 공백 제거(중간 공백 제거x)
+            but.setText("수정");
+        }catch (FileNotFoundException e) {
+            edit.setText("일기가 존재하지 않습니다.");
+            but.setText("새로 저장");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        } // end of catch
+
+        return diaryStr;
+    } // end of readDiary
 } // end of MainActivity
 
 //  DatePicker에서 Month는 1부터 시작
